@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cómo funciona Kekito</title>
+<style>
+:root{--bg:#09121f;--card:#101e30;--line:#263d59;--ink:#edf6ff;--muted:#a9bdd3;--a:#65e5c0;--b:#8fa9ff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#17375b,transparent 35%),var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:960px;margin:auto;padding:50px 20px 70px}h1{font-size:clamp(2.2rem,6vw,4.2rem);line-height:1;margin:0 0 14px}.lead{font-size:1.18rem;color:var(--muted);max-width:700px}.tag{color:var(--a);font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.78rem}.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:34px 0}.node{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px;font-weight:700}.arrow{color:var(--a);font-size:24px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.card{background:linear-gradient(145deg,#142841,#0e1a2b);border:1px solid var(--line);border-radius:18px;padding:20px}.icon{font-size:28px}h2{margin:8px 0;font-size:1.2rem}p{color:var(--muted);margin:0}.wide{margin-top:16px}.steps{padding-left:20px;color:var(--muted)}code{color:#c9d5ff;background:#081321;padding:2px 5px;border-radius:5px}footer{margin-top:42px;color:var(--muted);font-size:.9rem}a{color:var(--a)}
+</style>
+<body><main class="wrap">
+<div class="tag">wspbot · explicado simple</div><h1>Así funciona Kekito</h1>
+<p class="lead">Un bot de WhatsApp que recibe mensajes en grupos, decide qué hacer y responde con texto, voz, stickers, páginas web y más.</p>
+<div class="flow"><div class="node">WhatsApp</div><span class="arrow">→</span><div class="node">wapi</div><span class="arrow">→</span><div class="node">Kekito / IA</div><span class="arrow">→</span><div class="node">Respuesta</div></div>
+<section class="grid">
+<article class="card"><div class="icon">💬</div><h2>Mensajes</h2><p>WhatsApp llega mediante <b>wapi</b>, una API autohospedada. El mensaje entra por un webhook firmado; se confirma rápido y luego se procesa.</p></article>
+<article class="card"><div class="icon">🧠</div><h2>El cerebro</h2><p>La app está hecha con Next.js, React y TypeScript. Usa un modelo de OpenAI mediante Vercel AI SDK para entender pedidos y redactar respuestas.</p></article>
+<article class="card"><div class="icon">🔊</div><h2>Cómo genera audios</h2><p>Convierte el texto a voz con <code>gpt-4o-mini-tts</code>. Después ffmpeg lo transforma a Ogg/Opus mono a 48 kHz para que WhatsApp lo reproduzca como nota de voz.</p></article>
+<article class="card"><div class="icon">🖼️</div><h2>Cómo manda stickers</h2><p>Parte de una imagen, GIF o video. ffmpeg lo adapta a WebP de 512×512; si se mueve, genera WebP animado. Luego wapi lo envía al grupo.</p></article>
+<article class="card"><div class="icon">🌐</div><h2>Cómo crea webs</h2><p>Puede crear un repositorio en GitHub, subir archivos como <code>index.html</code> en un commit y activar GitHub Pages para publicarlo.</p></article>
+<article class="card"><div class="icon">🚀</div><h2>Despliegue</h2><p>Corre en un contenedor Docker en un VPS administrado por Dokploy, detrás de Traefik y HTTPS con Let's Encrypt.</p></article>
+</section>
+<article class="card wide"><div class="icon">🗃️</div><h2>Memoria y servicios</h2><p>Notas, historial por chat y biblioteca de stickers viven en Postgres. Redis y almacenamiento de objetos apoyan a wapi. La sesión de WhatsApp también se guarda en la base de datos, así los redeploys pueden reconectar sin pedir QR de nuevo.</p></article>
+<section class="card wide"><h2>El recorrido completo</h2><ol class="steps"><li>Alguien etiqueta a Kekito en un grupo.</li><li>wapi recibe el evento de WhatsApp y lo entrega por webhook.</li><li>La app interpreta el pedido, usa herramientas si hacen falta y prepara el resultado.</li><li>Si es voz o sticker, convierte el archivo al formato compatible.</li><li>wapi pone la respuesta en la cola y WhatsApp la entrega.</li></ol></section>
+<footer>Hecho para el grupo. Código de wspbot: <a href="https://github.com/Jibaru/wspbot">github.com/Jibaru/wspbot</a> · Gateway: <a href="https://github.com/crafter-station/wapi">github.com/crafter-station/wapi</a></footer>
+</main></body></html>
